@@ -38,9 +38,7 @@ class proxyserviceFetcher():
         self.config = config.config
 
         self.epg_cache = None
-        self.epg_cache_file = config.config["tvheadend"]["epg_cache"]
-
-        self.servicename = "TvheadendProxy"
+        self.epg_cache_file = config.config["proxy"]["epg_cache"]
 
         self.urls = {}
         self.url_assembler()
@@ -54,14 +52,20 @@ class proxyserviceFetcher():
                 epg_cache = json.load(epgfile)
         return epg_cache
 
+    def thumb_url(self, thumb_type, base_url, thumbnail):
+        if thumb_type == "channel":
+            return "http://" + str(base_url) + str(thumbnail)
+        elif thumb_type == "content":
+            return "http://" + str(base_url) + str(thumbnail)
+
     def url_assembler(self):
 
         self.urls["channels"] = ('%s%s:%s@%s:%s/api/channel/grid?start=0&limit=999999' %
-                                 ("https://" if self.config['tvheadend']["ssl"] else "http://",
-                                  self.config['tvheadend']["username"],
-                                  self.config['tvheadend']["password"],
-                                  self.config['tvheadend']["address"],
-                                  str(self.config['tvheadend']["port"])))
+                                 ("https://" if self.config['proxy']["ssl"] else "http://",
+                                  self.config['proxy']["username"],
+                                  self.config['proxy']["password"],
+                                  self.config['proxy']["address"],
+                                  str(self.config['proxy']["port"])))
 
     def get_channels(self):
 
@@ -119,14 +123,14 @@ class proxyserviceFetcher():
 
     def get_channel_stream(self, id):
         url = ('%s%s:%s@%s:%s/stream/channel/%s?profile=%s&weight=%s' %
-               ("https://" if self.config['tvheadend']["ssl"] else "http://",
-                self.config['tvheadend']["username"],
-                self.config['tvheadend']["password"],
-                self.config['tvheadend']["address"],
-                str(self.config['tvheadend']["port"]),
+               ("https://" if self.config['proxy']["ssl"] else "http://",
+                self.config['proxy']["username"],
+                self.config['proxy']["password"],
+                self.config['proxy']["address"],
+                str(self.config['proxy']["port"]),
                 id,
-                self.config["tvheadend"]['streamProfile'],
-                int(self.config["tvheadend"]['weight'])
+                self.config["proxy"]['streamprofile'],
+                int(self.config["proxy"]['weight'])
                 ))
         return url
 
@@ -135,14 +139,14 @@ class proxyserviceFetcher():
         for c in self.get_channels():
             if c['enabled']:
                 url = ('%s%s:%s@%s:%s/stream/channel/%s?profile=%s&weight=%s' %
-                       ("https://" if self.config['tvheadend']["ssl"] else "http://",
-                        self.config['tvheadend']["username"],
-                        self.config['tvheadend']["password"],
-                        self.config['tvheadend']["address"],
-                        str(self.config['tvheadend']["port"]),
+                       ("https://" if self.config['proxy']["ssl"] else "http://",
+                        self.config['proxy']["username"],
+                        self.config['proxy']["password"],
+                        self.config['proxy']["address"],
+                        str(self.config['proxy']["port"]),
                         c['uuid'],
-                        self.config["tvheadend"]['streamProfile'],
-                        int(self.config["tvheadend"]['weight'])
+                        self.config["proxy"]['streamprofile'],
+                        int(self.config["proxy"]['weight'])
                         ))
                 streamdict[str(c["number"])] = url
         return streamdict
@@ -176,11 +180,11 @@ class proxyserviceFetcher():
                                                     }
 
         epg_url = ('%s%s:%s@%s:%s/api/epg/events/grid?limit=999999' %
-                   ("https://" if self.config['tvheadend']["ssl"] else "http://",
-                    self.config['tvheadend']["username"],
-                    self.config['tvheadend']["password"],
-                    self.config['tvheadend']["address"],
-                    str(self.config['tvheadend']["port"]),
+                   ("https://" if self.config['proxy']["ssl"] else "http://",
+                    self.config['proxy']["username"],
+                    self.config['proxy']["password"],
+                    self.config['proxy']["address"],
+                    str(self.config['proxy']["port"]),
                     ))
         r = requests.get(epg_url)
         entries = r.json()['entries']
