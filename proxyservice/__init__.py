@@ -35,10 +35,10 @@ def duration_tvheadend_minutes(starttime, endtime):
 class proxyserviceFetcher():
 
     def __init__(self, config):
-        self.config = config.config
+        self.config = config.copy()
 
         self.epg_cache = None
-        self.epg_cache_file = config.config["proxy"]["epg_cache"]
+        self.epg_cache_file = self.config["proxy"]["epg_cache"]
 
         self.urls = {}
         self.url_assembler()
