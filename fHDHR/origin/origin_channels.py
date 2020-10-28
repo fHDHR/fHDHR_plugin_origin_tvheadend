@@ -10,6 +10,10 @@ class OriginService():
 
         self.web = fHDHR.tools.WebReq()
 
+    def get_status_dict(self):
+        ret_status_dict = {}
+        return ret_status_dict
+
     def get_channels(self):
 
         # otherwise we get an undefined error loading the dict
