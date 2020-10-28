@@ -10,6 +10,17 @@ class OriginService():
 
         self.web = fHDHR.tools.WebReq()
 
+    def get_status_dict(self):
+        tvh_address = '%s%s:%s' % (
+                                    "https://" if self.config.dict['origin']["ssl"] else "http://",
+                                    self.config.dict['origin']["address"],
+                                    str(self.config.dict['origin']["port"]))
+        ret_status_dict = {
+                            "Address": tvh_address,
+                            "Username": self.config.dict['origin']["username"],
+                            }
+        return ret_status_dict
+
     def get_channels(self):
 
         # otherwise we get an undefined error loading the dict
