@@ -3,13 +3,12 @@ import datetime
 import fHDHR.tools
 
 
-class originEPG():
+class OriginEPG():
 
-    def __init__(self, settings, channels):
+    def __init__(self, settings, logger, web):
         self.config = settings
-        self.channels = channels
-
-        self.web = fHDHR.tools.WebReq()
+        self.logger = logger
+        self.web = web
 
     def xmltimestamp_tvheadend(self, epochtime):
         xmltime = datetime.datetime.fromtimestamp(int(epochtime))
@@ -19,10 +18,10 @@ class originEPG():
     def duration_tvheadend_minutes(self, starttime, endtime):
         return ((int(endtime) - int(starttime))/60)
 
-    def update_epg(self):
+    def update_epg(self, fhdhr_channels):
         programguide = {}
 
-        for c in self.channels.get_channels():
+        for c in fhdhr_channels.get_channels():
 
             cdict = fHDHR.tools.xmldictmaker(c, ["callsign", "name", "number", "id"])
 
