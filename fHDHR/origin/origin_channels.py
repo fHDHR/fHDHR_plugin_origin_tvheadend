@@ -3,11 +3,9 @@ import json
 
 class OriginChannels():
 
-    def __init__(self, settings, origin, logger, web):
-        self.config = settings
+    def __init__(self, fhdhr, origin):
+        self.fhdhr = fhdhr
         self.origin = origin
-        self.logger = logger
-        self.web = web
 
     def get_channels(self):
 
@@ -15,12 +13,12 @@ class OriginChannels():
         true = True
         true
 
-        r = self.web.session.get(('%s%s:%s@%s:%s/api/channel/grid?start=0&limit=999999' %
-                                 ("https://" if self.config.dict['origin']["ssl"] else "http://",
-                                  self.config.dict['origin']["username"],
-                                  self.config.dict['origin']["password"],
-                                  self.config.dict['origin']["address"],
-                                  str(self.config.dict['origin']["port"]))))
+        r = self.fhdhr.web.session.get(('%s%s:%s@%s:%s/api/channel/grid?start=0&limit=999999' %
+                                       ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
+                                        self.fhdhr.config.dict['origin']["username"],
+                                        self.fhdhr.config.dict['origin']["password"],
+                                        self.fhdhr.config.dict['origin']["address"],
+                                        str(self.fhdhr.config.dict['origin']["port"]))))
 
         channel_list = []
         for c in r.json()['entries']:
@@ -40,14 +38,14 @@ class OriginChannels():
         streamlist = []
         streamdict = {}
         streamurl = ('%s%s:%s@%s:%s/stream/channel/%s?profile=%s&weight=%s' %
-                     ("https://" if self.config.dict['origin']["ssl"] else "http://",
-                      self.config.dict['origin']["username"],
-                      self.config.dict['origin']["password"],
-                      self.config.dict['origin']["address"],
-                      str(self.config.dict['origin']["port"]),
+                     ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
+                      self.fhdhr.config.dict['origin']["username"],
+                      self.fhdhr.config.dict['origin']["password"],
+                      self.fhdhr.config.dict['origin']["address"],
+                      str(self.fhdhr.config.dict['origin']["port"]),
                       str(chandict["id"]),
-                      self.config.dict["origin"]['streamprofile'],
-                      int(self.config.dict["origin"]['weight'])
+                      self.fhdhr.config.dict["origin"]['streamprofile'],
+                      int(self.fhdhr.config.dict["origin"]['weight'])
                       ))
         streamdict = {"number": chandict["number"], "stream_url": streamurl}
         streamlist.append(streamdict)
