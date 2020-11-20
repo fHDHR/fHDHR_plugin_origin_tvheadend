@@ -29,7 +29,7 @@ class OriginEPG():
                                                     "callsign": cdict["callsign"],
                                                     "name": cdict["name"] or cdict["callsign"],
                                                     "number": cdict["number"],
-                                                    "id": str(cdict["id"]),
+                                                    "id": str(cdict["origin_id"]),
                                                     "thumbnail": None,
                                                     "listing": [],
                                                     }
