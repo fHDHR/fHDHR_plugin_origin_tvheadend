@@ -30,6 +30,11 @@ class OriginChannels():
                                  "number": channel_dict["number"],
                                  "id": channel_dict["uuid"],
                                  }
+            try:
+                thumbnail = channel_dict["icon"]
+            except KeyError:
+                thumbnail = None
+            clean_station_item["thumbnail"] = thumbnail
             channel_list.append(clean_station_item)
         return channel_list
 
