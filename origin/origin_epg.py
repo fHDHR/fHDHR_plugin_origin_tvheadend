@@ -19,20 +19,11 @@ class OriginEPG():
     def update_epg(self, fhdhr_channels):
         programguide = {}
 
-        for c in fhdhr_channels.get_channels():
+        for fhdhr_id in list(fhdhr_channels.list.keys()):
+            chan_obj = fhdhr_channels.list[fhdhr_id]
 
-            cdict = fHDHR.tools.xmldictmaker(c, ["callsign", "name", "number", "id"])
-
-            if str(cdict['number']) not in list(programguide.keys()):
-
-                programguide[str(cdict['number'])] = {
-                                                    "callsign": cdict["callsign"],
-                                                    "name": cdict["name"] or cdict["callsign"],
-                                                    "number": cdict["number"],
-                                                    "id": str(cdict["origin_id"]),
-                                                    "thumbnail": cdict["thumbnail"],
-                                                    "listing": [],
-                                                    }
+            if str(chan_obj.dict["number"]) not in list(programguide.keys()):
+                programguide[str(chan_obj.dict["number"])] = chan_obj.epgdict
 
         epg_url = ('%s%s:%s@%s:%s/api/epg/events/grid?limit=999999' %
                    ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
@@ -47,6 +38,8 @@ class OriginEPG():
         for program_item in entries:
 
             progdict = fHDHR.tools.xmldictmaker(program_item, ["channelNumber", "start", "stop", "eventId", "title", "name", "subtitle", "rating", "description", "season", "episode", "id", "episodeTitle"])
+
+            chan_obj = fhdhr_channels.get_channel_obj("origin_number", progdict["channelNumber"])
 
             clean_prog_dict = {
                                 "time_start": self.xmltimestamp_tvheadend(progdict["start"]),
@@ -66,6 +59,7 @@ class OriginEPG():
                                 "id": str(progdict['eventId'] or self.xmltimestamp_tvheadend(progdict["start"])),
                                 }
 
-            programguide[str(progdict["channelNumber"])]["listing"].append(clean_prog_dict)
+            if not any(d['id'] == clean_prog_dict['id'] for d in programguide[str(chan_obj.dict["number"])]["listing"]):
+                programguide[str(chan_obj.dict["number"])]["listing"].append(clean_prog_dict)
 
         return programguide
