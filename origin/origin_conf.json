@@ -32,16 +32,6 @@
                     "config_file": true,
                     "config_web": true
                 },
-          "stream_type":{
-                              "value": "direct",
-                              "config_file": true,
-                              "config_web": true
-                              },
-          "tuner_count":{
-                  "value": 4,
-                  "config_file": true,
-                  "config_web": true
-                },
           "reporting_firmware_name":{
                                     "value": "fHDHR_Tvheadend",
                                     "config_file": true,
@@ -51,11 +41,6 @@
   "epg":{
           "method":{
                     "value": "origin",
-                    "config_file": true,
-                    "config_web": true
-                },
-          "update_frequency":{
-                    "value": 43200,
                     "config_file": true,
                     "config_web": true
                 }
