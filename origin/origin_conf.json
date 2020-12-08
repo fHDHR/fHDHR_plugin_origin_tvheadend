@@ -15,11 +15,6 @@
                           "config_file": false,
                           "config_web": false
                         },
-          "valid_epg_methods":{
-                          "value": "None,blocks,origin,zap2it",
-                          "config_file": false,
-                          "config_web": false
-                        },
           "required":{
                           "value": "tvheadend/username,tvheadend/password",
                           "config_file": false,
@@ -43,7 +38,12 @@
                     "value": "origin",
                     "config_file": true,
                     "config_web": true
-                }
+                },
+          "valid_epg_methods":{
+                          "value": "None,blocks,origin,zap2it",
+                          "config_file": false,
+                          "config_web": false
+                        }
   },
   "tvheadend":{
           "address":{
