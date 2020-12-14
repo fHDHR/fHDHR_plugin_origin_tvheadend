@@ -1,4 +1,3 @@
-import datetime
 
 import fHDHR.tools
 
@@ -7,11 +6,6 @@ class OriginEPG():
 
     def __init__(self, fhdhr):
         self.fhdhr = fhdhr
-
-    def xmltimestamp_tvheadend(self, epochtime):
-        xmltime = datetime.datetime.fromtimestamp(int(epochtime))
-        xmltime = str(xmltime.strftime('%Y%m%d%H%M%S')) + " +0000"
-        return xmltime
 
     def duration_tvheadend_minutes(self, starttime, endtime):
         return ((int(endtime) - int(starttime))/60)
@@ -42,8 +36,8 @@ class OriginEPG():
             chan_obj = fhdhr_channels.get_channel_obj("origin_number", progdict["channelNumber"])
 
             clean_prog_dict = {
-                                "time_start": self.xmltimestamp_tvheadend(progdict["start"]),
-                                "time_end": self.xmltimestamp_tvheadend(progdict["stop"]),
+                                "time_start": int(progdict["start"]),
+                                "time_end": int(progdict["stop"]),
                                 "duration_minutes": self.duration_tvheadend_minutes(progdict["start"], progdict["stop"]),
                                 "thumbnail": None,
                                 "title": progdict['title'] or "Unavailable",
@@ -56,10 +50,10 @@ class OriginEPG():
                                 "seasonnumber": progdict['season'],
                                 "episodenumber": progdict['episode'],
                                 "isnew": False,
-                                "id": str(progdict['eventId'] or self.xmltimestamp_tvheadend(progdict["start"])),
+                                "id": str(progdict['id'] or "%s_%s" % (chan_obj.dict['origin_id'], progdict["start"])),
                                 }
 
-            if not any(d['id'] == clean_prog_dict['id'] for d in programguide[str(chan_obj.dict["number"])]["listing"]):
+            if not any((d['time_start'] == clean_prog_dict['time_start'] and d['id'] == clean_prog_dict['id']) for d in programguide[chan_obj.number]["listing"]):
                 programguide[str(chan_obj.dict["number"])]["listing"].append(clean_prog_dict)
 
         return programguide
