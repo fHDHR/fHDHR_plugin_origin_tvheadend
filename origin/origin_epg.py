@@ -16,8 +16,8 @@ class OriginEPG():
         for fhdhr_id in list(fhdhr_channels.list.keys()):
             chan_obj = fhdhr_channels.list[fhdhr_id]
 
-            if str(chan_obj.dict["number"]) not in list(programguide.keys()):
-                programguide[str(chan_obj.dict["number"])] = chan_obj.epgdict
+            if str(chan_obj.number) not in list(programguide.keys()):
+                programguide[str(chan_obj.number)] = chan_obj.epgdict
 
         epg_url = ('%s%s:%s@%s:%s/api/epg/events/grid?limit=999999' %
                    ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
@@ -54,6 +54,6 @@ class OriginEPG():
                                 }
 
             if not any((d['time_start'] == clean_prog_dict['time_start'] and d['id'] == clean_prog_dict['id']) for d in programguide[chan_obj.number]["listing"]):
-                programguide[str(chan_obj.dict["number"])]["listing"].append(clean_prog_dict)
+                programguide[str(chan_obj.number)]["listing"].append(clean_prog_dict)
 
         return programguide
