@@ -1,4 +1,3 @@
-import json
 
 
 class OriginChannels():
@@ -9,21 +8,17 @@ class OriginChannels():
 
     def get_channels(self):
 
-        # otherwise we get an undefined error loading the dict
-        true = True
-        true
-
         r = self.fhdhr.web.session.get(('%s%s:%s@%s:%s/api/channel/grid?start=0&limit=999999' %
                                        ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
                                         self.fhdhr.config.dict['origin']["username"],
                                         self.fhdhr.config.dict['origin']["password"],
                                         self.fhdhr.config.dict['origin']["address"],
                                         str(self.fhdhr.config.dict['origin']["port"]))))
+        entries = r.json()['entries']
 
         channel_list = []
-        for c in r.json()['entries']:
-            dString = json.dumps(c)
-            channel_dict = eval(dString)
+        for channel_dict in entries:
+
             clean_station_item = {
                                  "name": channel_dict["name"],
                                  "callsign": channel_dict["name"],
