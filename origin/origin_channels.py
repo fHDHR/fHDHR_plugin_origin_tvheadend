@@ -34,6 +34,11 @@ class OriginChannels():
         return channel_list
 
     def get_channel_stream(self, chandict, stream_args):
+        if not stream_args["origin_quality"] or stream_args["origin_quality"] in ["high", "pass"]:
+            streamprofile = "pass"
+        else:
+            streamprofile = "pass"
+
         streamurl = ('%s%s:%s@%s:%s/stream/channel/%s?profile=%s&weight=%s' %
                      ("https://" if self.fhdhr.config.dict['origin']["ssl"] else "http://",
                       self.fhdhr.config.dict['origin']["username"],
@@ -41,7 +46,7 @@ class OriginChannels():
                       self.fhdhr.config.dict['origin']["address"],
                       str(self.fhdhr.config.dict['origin']["port"]),
                       str(chandict["origin_id"]),
-                      self.fhdhr.config.dict["origin"]['streamprofile'],
+                      streamprofile,
                       int(self.fhdhr.config.dict["origin"]['weight'])
                       ))
 
