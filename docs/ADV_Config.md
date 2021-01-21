@@ -155,7 +155,6 @@ The `Tvheadend` section
 * what `port` does tvheadend use
 * does tvheadend use `ssl`?
 * `username` and `password` are required credentials.
-* `weight` and `streamprofile` are things that I don't reccomend messing with.
 * `epg_update_frequency` This setting is in seconds.
 
 
@@ -167,7 +166,6 @@ The `Tvheadend` section
 # username =
 # password =
 # weight = 300
-# streamprofile = pass
 ````
 
 ## zap2it

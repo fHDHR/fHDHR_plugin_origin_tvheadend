@@ -45,6 +45,13 @@
                           "config_web": false
                         }
   },
+  "streaming":{
+          "origin_quality":{
+                    "value": "pass",
+                    "config_file": true,
+                    "config_web": true
+                }
+  },
   "tvheadend":{
           "address":{
                     "value": "localhost",
@@ -76,11 +83,6 @@
                     "value": 300,
                     "config_file": true,
                     "config_web": true
-                },
-          "streamprofile":{
-                    "value": "pass",
-                    "config_file": true,
-                    "config_web": false
                 }
   }
 }
