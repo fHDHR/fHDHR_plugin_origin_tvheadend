@@ -14,11 +14,6 @@
                           "value": "fHDHR_Tvheadend",
                           "config_file": false,
                           "config_web": false
-                        },
-          "required":{
-                          "value": "tvheadend/username,tvheadend/password",
-                          "config_file": false,
-                          "config_web": false
                         }
   },
   "fhdhr":{
@@ -71,13 +66,15 @@
           "username":{
                     "value": "none",
                     "config_file": true,
-                    "config_web": true
+                    "config_web": true,
+                    "required": true
                 },
           "password":{
                     "value": "none",
                     "config_file": true,
                     "config_web": true,
-                    "config_web_hidden": true
+                    "config_web_hidden": true,
+                    "required": true
                 },
           "weight":{
                     "value": 300,
