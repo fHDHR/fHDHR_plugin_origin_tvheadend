@@ -1,0 +1,37 @@
+{
+  "tvheadend":{
+          "address":{
+                    "value": "localhost",
+                    "config_file": true,
+                    "config_web": true
+                },
+          "port":{
+                    "value": 9981,
+                    "config_file": true,
+                    "config_web": true
+                },
+          "ssl":{
+                    "value": false,
+                    "config_file": true,
+                    "config_web": true
+                },
+          "username":{
+                    "value": "none",
+                    "config_file": true,
+                    "config_web": true,
+                    "required": true
+                },
+          "password":{
+                    "value": "none",
+                    "config_file": true,
+                    "config_web": true,
+                    "config_web_hidden": true,
+                    "required": true
+                },
+          "weight":{
+                    "value": 300,
+                    "config_file": true,
+                    "config_web": true
+                }
+  }
+}
