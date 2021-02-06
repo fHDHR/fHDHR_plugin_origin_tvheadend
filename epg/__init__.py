@@ -11,6 +11,9 @@ class Plugin_OBJ():
 
         self.origin = plugin_utils.origin
 
+    def duration_tvheadend_minutes(self, starttime, endtime):
+        return ((int(endtime) - int(starttime))/60)
+
     def update_epg(self):
         programguide = {}
 
