@@ -5,6 +5,9 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
+        self.tuners = self.plugin_utils.config.dict["tvheadend"]["tuners"]
+        self.stream_method = self.plugin_utils.config.dict["tvheadend"]["stream_method"]
+
         self.tvh_address = ('%s%s:%s' %
                             ("https://" if self.plugin_utils.config.dict['tvheadend']["ssl"] else "http://",
                              self.plugin_utils.config.dict['tvheadend']["address"],
