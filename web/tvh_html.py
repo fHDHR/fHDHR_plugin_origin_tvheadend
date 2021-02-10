@@ -15,7 +15,7 @@ class TVH_HTML():
 
         self.origin = plugin_utils.origin
 
-        self.template_file = pathlib.Path(fhdhr.config.dict["plugin_web_paths"][plugin_utils.namespace]["path"]).joinpath('tvh.html')
+        self.template_file = pathlib.Path(plugin_utils.path).joinpath('tvh.html')
         self.template = StringIO()
         self.template.write(open(self.template_file).read())
 
@@ -27,8 +27,8 @@ class TVH_HTML():
         if self.origin.setup_success:
             origin_status_dict = {
                                  "Setup": "Success",
-                                 "Address": self.origin.tvh_address,
-                                 "Username": self.fhdhr.config.dict['tvheadend']["username"],
+                                 "Address": self.origin.address_without_creds,
+                                 "Username": self.origin.username,
                                  }
         else:
             origin_status_dict = {"Setup": "Failed"}
