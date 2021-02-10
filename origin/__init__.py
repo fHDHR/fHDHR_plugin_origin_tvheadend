@@ -5,22 +5,50 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
-        self.tuners = self.plugin_utils.config.dict["tvheadend"]["tuners"]
-        self.stream_method = self.plugin_utils.config.dict["tvheadend"]["stream_method"]
+    @property
+    def tuners(self):
+        return self.plugin_utils.config.dict["tvheadend"]["tuners"]
 
-        self.tvh_address = ('%s%s:%s' %
-                            ("https://" if self.plugin_utils.config.dict['tvheadend']["ssl"] else "http://",
-                             self.plugin_utils.config.dict['tvheadend']["address"],
-                             str(self.plugin_utils.config.dict['tvheadend']["port"])))
+    @property
+    def stream_method(self):
+        return self.plugin_utils.config.dict["tvheadend"]["stream_method"]
+
+    @property
+    def username(self):
+        return self.plugin_utils.config.dict["tvheadend"]["username"]
+
+    @property
+    def password(self):
+        return self.plugin_utils.config.dict["tvheadend"]["password"]
+
+    @property
+    def address(self):
+        return self.plugin_utils.config.dict["tvheadend"]["address"]
+
+    @property
+    def port(self):
+        return self.plugin_utils.config.dict["tvheadend"]["port"]
+
+    @property
+    def weight(self):
+        return self.plugin_utils.config.dict["tvheadend"]["weight"]
+
+    @property
+    def proto(self):
+        return "https://" if self.plugin_utils.config.dict['tvheadend']["ssl"] else "http://"
+
+    @property
+    def address_with_creds(self):
+        return '%s%s:%s@%s:%s' % (self.proto, self.username, self.password, self.address, str(self.port))
+
+    @property
+    def address_without_creds(self):
+        return '%s%s:%s' % (self.proto, self.address, str(self.port))
 
     def get_channels(self):
 
-        r = self.plugin_utils.web.session.get(('%s%s:%s@%s:%s/api/channel/grid?start=0&limit=999999' %
-                                              ("https://" if self.plugin_utils.config.dict['tvheadend']["ssl"] else "http://",
-                                               self.plugin_utils.config.dict['tvheadend']["username"],
-                                               self.plugin_utils.config.dict['tvheadend']["password"],
-                                               self.plugin_utils.config.dict['tvheadend']["address"],
-                                               str(self.plugin_utils.config.dict['tvheadend']["port"]))))
+        r = self.plugin_utils.web.session.get('%s/api/channel/grid?start=0&limit=999999' % self.address_with_creds)
+
         entries = r.json()['entries']
 
         channel_list = []
@@ -46,16 +74,7 @@ class Plugin_OBJ():
         else:
             streamprofile = "pass"
 
-        streamurl = ('%s%s:%s@%s:%s/stream/channel/%s?profile=%s&weight=%s' %
-                     ("https://" if self.plugin_utils.config.dict['tvheadend']["ssl"] else "http://",
-                      self.plugin_utils.config.dict['tvheadend']["username"],
-                      self.plugin_utils.config.dict['tvheadend']["password"],
-                      self.plugin_utils.config.dict['tvheadend']["address"],
-                      str(self.plugin_utils.config.dict['tvheadend']["port"]),
-                      str(chandict["origin_id"]),
-                      streamprofile,
-                      int(self.plugin_utils.config.dict["tvheadend"]['weight'])
-                      ))
+        streamurl = ('%s/stream/channel/%s?profile=%s&weight=%s' % (self.address_with_creds, streamprofile, chandict["origin_id"], self.weight))
 
         stream_info = {"url": streamurl}
 
