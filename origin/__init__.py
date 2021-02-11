@@ -74,7 +74,7 @@ class Plugin_OBJ():
         else:
             streamprofile = "pass"
 
-        streamurl = ('%s/stream/channel/%s?profile=%s&weight=%s' % (self.address_with_creds, streamprofile, chandict["origin_id"], self.weight))
+        streamurl = ('%s/stream/channel/%s?profile=%s&weight=%s' % (self.address_with_creds, chandict["origin_id"], streamprofile, self.weight))
 
         stream_info = {"url": streamurl}
 
