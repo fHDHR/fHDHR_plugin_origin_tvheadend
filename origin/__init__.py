@@ -1,3 +1,4 @@
+from simplejson.errors import JSONDecodeError
 
 
 class Plugin_OBJ():
@@ -49,7 +50,10 @@ class Plugin_OBJ():
 
         r = self.plugin_utils.web.session.get('%s/api/channel/grid?start=0&limit=999999' % self.address_with_creds)
 
-        entries = r.json()['entries']
+        try:
+            entries = r.json()['entries']
+        except JSONDecodeError:
+            return []
 
         channel_list = []
         for channel_dict in entries:
