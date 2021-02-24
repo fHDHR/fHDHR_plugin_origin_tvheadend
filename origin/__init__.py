@@ -1,4 +1,5 @@
-from simplejson.errors import JSONDecodeError
+import json
+from simplejson import errors as simplejsonerrors
 
 
 class Plugin_OBJ():
@@ -52,7 +53,11 @@ class Plugin_OBJ():
 
         try:
             entries = r.json()['entries']
-        except JSONDecodeError:
+        except json.JSONDecodeError as err:
+            self.plugin_utils.logger.error("Channel Gathering Failed: %s" % err)
+            return []
+        except simplejsonerrors.JSONDecodeError as err:
+            self.plugin_utils.logger.error("Channel Gathering Failed: %s" % err)
             return []
 
         channel_list = []
