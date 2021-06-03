@@ -1,3 +1,4 @@
+from simplejson import errors as simplejsonerrors
 
 import fHDHR.tools
 
@@ -31,7 +32,11 @@ class Plugin_OBJ():
                     str(self.plugin_utils.config.dict['tvheadend']["port"]),
                     ))
         r = self.plugin_utils.web.session.get(epg_url)
-        entries = r.json()['entries']
+        try:
+            entries = r.json()['entries']
+        except simplejsonerrors.JSONDecodeError as err:
+            self.plugin_utils.logger.error("EPG Gathering Failed: %s" % err)
+            return programguide
 
         for program_item in entries:
 
