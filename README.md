@@ -30,3 +30,6 @@ Join us in `#fHDHR <irc://irc.freenode.net/#fHDHR>`_ on Freenode.
 # password =
 # weight = 300
 ````
+
+# Tvheadend Auth setup
+https://github.com/fHDHR/fHDHR_plugin_origin_tvheadend/issues/10#issuecomment-854054098
