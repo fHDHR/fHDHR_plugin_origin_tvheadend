@@ -80,6 +80,8 @@ class Plugin_OBJ():
     def get_channel_stream(self, chandict, stream_args):
         if not stream_args["origin_quality"] or stream_args["origin_quality"] in ["high", "pass"]:
             streamprofile = "pass"
+        elif stream_args["origin_quality"]:
+            streamprofile = stream_args["origin_quality"]
         else:
             streamprofile = "pass"
 
