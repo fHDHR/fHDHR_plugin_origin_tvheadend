@@ -8,14 +8,6 @@ class Plugin_OBJ():
         self.plugin_utils = plugin_utils
 
     @property
-    def tuners(self):
-        return self.plugin_utils.config.dict["tvheadend"]["tuners"]
-
-    @property
-    def stream_method(self):
-        return self.plugin_utils.config.dict["tvheadend"]["stream_method"]
-
-    @property
     def username(self):
         return self.plugin_utils.config.dict["tvheadend"]["username"]
 
