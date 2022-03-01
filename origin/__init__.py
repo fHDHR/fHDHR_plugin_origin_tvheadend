@@ -8,14 +8,6 @@ class Plugin_OBJ():
         self.plugin_utils = plugin_utils
 
     @property
-    def tuners(self):
-        return self.plugin_utils.config.dict["tvheadend"]["tuners"]
-
-    @property
-    def stream_method(self):
-        return self.plugin_utils.config.dict["tvheadend"]["stream_method"]
-
-    @property
     def username(self):
         return self.plugin_utils.config.dict["tvheadend"]["username"]
 
@@ -80,6 +72,8 @@ class Plugin_OBJ():
     def get_channel_stream(self, chandict, stream_args):
         if not stream_args["origin_quality"] or stream_args["origin_quality"] in ["high", "pass"]:
             streamprofile = "pass"
+        elif stream_args["origin_quality"]:
+            streamprofile = stream_args["origin_quality"]
         else:
             streamprofile = "pass"
 
