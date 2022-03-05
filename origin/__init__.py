@@ -7,6 +7,12 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
+    def webpage_dict(self):
+        return {
+                "Address": self.address_without_creds,
+                "Username": self.username,
+                }
+
     @property
     def username(self):
         return self.plugin_utils.config.dict["tvheadend"]["username"]
