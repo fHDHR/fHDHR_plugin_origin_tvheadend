@@ -7,6 +7,7 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
+    @property
     def webpage_dict(self):
         return {
                 "Address": self.address_without_creds,
